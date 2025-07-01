@@ -10,3 +10,15 @@ function checkObjectClicked(obj) {
 	}
 	else return false;
 }
+
+function SwapTurn() {
+	if turn == "player" turn = "opponent";
+	else if turn == "opponent" turn = "player";
+}
+
+function CheckCardPlayable(hand,centercard,selected,index) {
+	if string_char_at(centercard.value,3) == string_char_at(hand[selected[index]].value,3) or (string_char_at(centercard.value,1) == string_char_at(hand[selected[index]].value,1) and string_char_at(centercard.value,2) == string_char_at(hand[selected[index]].value,2)) {
+		return true;
+	}
+	else return false;
+}

@@ -4,6 +4,8 @@ playerHand = [];
 draw_set_colour(c_red);
 draw_set_font(font);
 
+turn = "player"; //whose turn it is
+
 //create starting playerDeck
 for (var i = 1; i < 15; i++) {
 	if i != 6 and i != 9 {
