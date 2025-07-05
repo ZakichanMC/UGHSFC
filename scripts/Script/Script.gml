@@ -5,11 +5,31 @@ function Draw(deck,hand,obj) {
 }
 
 function checkObjectClicked(obj) {
-	if mouse_check_button_released(1) and obj.x <= mouse_x and mouse_x <= obj.x+obj.sprite_width and obj.y <= mouse_y and mouse_y <= obj.y+obj.sprite_height {
+	if mouse_check_button_released(1) and position_meeting(mouse_x,mouse_y,obj) {
 		return true;
 	}
 	else return false;
 }
+
+function checkCardClicked(cards,type) {
+	var _lowest = 9999;
+	var _clicked = noone;
+	with (cards) {
+		if type == "press" {
+			if (mouse_check_button_pressed(1) and position_meeting(mouse_x,mouse_y,id)  and (depth < _lowest)) {
+			    _lowest = depth;
+			    _clicked = id;
+			}
+		}
+		else if type == "release" {
+			if (mouse_check_button_released(1) and position_meeting(mouse_x,mouse_y,id)) {
+			    _clicked = id;
+			}
+		}
+	}
+	return _clicked
+}
+
 
 function SwapTurn() {
 	if turn == "player" turn = "opponent";

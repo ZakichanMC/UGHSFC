@@ -1,3 +1,5 @@
+randomize();
+
 playerDeck = [];
 playerHand = [];
 
@@ -31,6 +33,4 @@ for (var i = 0; i < 5; i++) {
 	var _card = instance_create_layer(40,200,"Instances",oCard);
 	_card.value = Draw(playerDeck,playerHand,_card);
 	_card.owner = "player";
-	_card.x = 40+40*array_length(playerHand);
 }
-//show_debug_message(playerHand);

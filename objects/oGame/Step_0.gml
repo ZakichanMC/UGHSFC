@@ -2,10 +2,10 @@
 if checkObjectClicked(oDrawButton) and turn == "player" {
 	var _card = instance_create_layer(40,200,"Instances",oCard);
 	_card.value = Draw(playerDeck,playerHand,_card);
+	_card.x = 9999;
 	_card.owner = "player";
-	_card.x = 40+40*array_length(playerHand);
 	
-	SwapTurn();
+	//SwapTurn();
 }
 
 //change center card when play button is clicked
@@ -51,11 +51,24 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 			else break; //if there's anything that doesn't work, stop play
 		}
 	
-		SwapTurn();
+		//SwapTurn();
 	}
 }
 
+//a function to sort cards by their x positions
+array_sort(playerHand,function(a,b) {
+	return a.x - b.x;
+});
+
 //make sure cards are always aligned properly
 for (var i = 0; i < array_length(playerHand); i++) {
-	playerHand[i].x = 40+40*i;
+	//if the card is in hand, lock it in place
+	if !playerHand[i].dragged {
+		//to avoid division by 0
+		if array_length(playerHand) > 1 {
+			playerHand[i].x = 32 + i * (192 - 32) / (array_length(playerHand) - 1);
+		}
+		else playerHand[i].x = 32;
+	}
+	playerHand[i].depth = -playerHand[i].x;
 }
