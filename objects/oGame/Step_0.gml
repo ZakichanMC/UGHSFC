@@ -1,9 +1,6 @@
 //add card to hand when draw button is clicked
 if checkObjectClicked(oDrawButton) and turn == "player" {
-	var _card = instance_create_layer(40,200,"Instances",oCard);
-	_card.value = Draw(playerDeck,playerHand,_card);
-	_card.x = 9999;
-	_card.owner = "player";
+	CreateCard();
 	
 	//SwapTurn();
 }
@@ -45,6 +42,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 			//if shape or number match
 			if CheckCardPlayable(playerHand,oCenterCard,_selectedList,j) {
 				oCenterCard.value = playerHand[_selectedList[j]].value; //change the center card
+				oCenterCard.image_index = string_char_at(oCenterCard.value,3);
 				instance_destroy(playerHand[_selectedList[j]]); //destroy card
 				array_delete(playerHand,_selectedList[j],1); //remove from list
 			}

@@ -18,13 +18,10 @@ if owner == "player" {
 		}
 	}
 	
-	//if card is selected, move it up slightly
 	if (selected and not dragged) {
 		y = origY - 10;
-		//x = origX;
 	}
 	else if !selected and !dragged {
 		y = origY;
-		//x = origX;
 	}
 }

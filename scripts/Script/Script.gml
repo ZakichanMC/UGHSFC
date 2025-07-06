@@ -16,14 +16,14 @@ function checkCardClicked(cards,type) {
 	var _clicked = noone;
 	with (cards) {
 		if type == "press" {
-			if (mouse_check_button_pressed(1) and position_meeting(mouse_x,mouse_y,id)  and (depth < _lowest)) {
+			if (mouse_check_button_pressed(1) and position_meeting(mouse_x,mouse_y,id) and (depth < _lowest)) {
 			    _lowest = depth;
 			    _clicked = id;
 			}
 		}
 		else if type == "release" {
-			if (mouse_check_button_released(1) and position_meeting(mouse_x,mouse_y,id)) {
-			    _clicked = id;
+			if (mouse_check_button_released(1) and position_meeting(mouse_x,mouse_y,id) and id.dragged) {
+				_clicked = id;
 			}
 		}
 	}
@@ -41,4 +41,12 @@ function CheckCardPlayable(hand,centercard,selected,index) {
 		return true;
 	}
 	else return false;
+}
+
+function CreateCard() {
+	var _card = instance_create_layer(40,200,"Instances",oCard);
+	_card.x = 9999;
+	_card.value = Draw(playerDeck,playerHand,_card);
+	_card.image_index = string_char_at(_card.value,3);
+	_card.owner = "player";
 }

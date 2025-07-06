@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sCard",
-    "path":"sprites/sCard/sCard.yy",
+    "name":"sSuits",
+    "path":"sprites/sSuits/sSuits.yy",
   },
   "spriteMaskId":null,
   "visible":true,
