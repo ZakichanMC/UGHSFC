@@ -3,7 +3,6 @@ owner = "";
 selected = false;
 dragged = false;
 
-
 origX = x;
 origY = y;
 

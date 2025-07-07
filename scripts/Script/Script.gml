@@ -32,8 +32,8 @@ function checkCardClicked(cards,type) {
 
 
 function SwapTurn() {
-	if turn == "player" turn = "opponent";
-	else if turn == "opponent" turn = "player";
+	if turn == "player" turn = "enemy";
+	else if turn == "enemy" turn = "player";
 }
 
 function CheckCardPlayable(hand,centercard,selected,index) {
@@ -43,10 +43,31 @@ function CheckCardPlayable(hand,centercard,selected,index) {
 	else return false;
 }
 
-function CreateCard() {
-	var _card = instance_create_layer(40,200,"Instances",oCard);
-	_card.x = 9999;
-	_card.value = Draw(playerDeck,playerHand,_card);
-	_card.image_index = string_char_at(_card.value,3);
-	_card.owner = "player";
+function CreateCard(deck,hand,_owner) {
+	var _card = noone;
+	if _owner == "player" {
+		_card = instance_create_layer(9999,200,"Instances",oCard);
+		_card.value = Draw(deck,hand,_card);
+		_card.image_index = string_char_at(_card.value,3);
+	}
+	else {
+		_card = instance_create_layer(9999,32,"Instances",oCard);
+		_card.value = Draw(deck,hand,_card);
+		_card.image_index = string_char_at(_card.value,3); //change back to 5
+	}
+	_card.owner = _owner;
+}
+
+function AlignCards(hand) {
+	for (var i = 0; i < array_length(hand); i++) {
+		//if the card is in hand, lock it in place
+		if !hand[i].dragged {
+			//to avoid division by 0
+			if array_length(hand) > 1 {
+				hand[i].x = 32 + i * (192 - 32) / (array_length(hand) - 1);
+			}
+			else hand[i].x = 32;
+		}
+		hand[i].depth = -hand[i].x;
+	}
 }
