@@ -1,6 +1,6 @@
 //make sure players never run out of cards
-if array_length(playerDeck) == 0 playerDeck = array_shuffle(startingDeck);
-if array_length(enemyDeck) == 0 enemyDeck = array_shuffle(startingDeck);
+if array_length(playerDeck) == 0 playerDeck = array_shuffle(global.defaultDeck);
+if array_length(enemyDeck) == 0 enemyDeck = array_shuffle(global.defaultDeck);
 
 //add card to hand when draw button is clicked
 if checkObjectClicked(oDrawButton) and turn == "player" {
@@ -46,7 +46,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 			//if shape or number match
 			if CheckCardPlayable(playerHand,oCenterCard,_selectedList,j) {
 				oCenterCard.value = playerHand[_selectedList[j]].value; //change the center card
-				oCenterCard.image_index = string_char_at(oCenterCard.value,3);
+				oCenterCard.image_index = oCenterCard.value.shape;
 				instance_destroy(playerHand[_selectedList[j]]); //destroy card
 				array_delete(playerHand,_selectedList[j],1); //remove from list
 			}

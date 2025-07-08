@@ -30,14 +30,13 @@ function checkCardClicked(cards,type) {
 	return _clicked
 }
 
-
 function SwapTurn() {
 	if turn == "player" turn = "enemy";
 	else if turn == "enemy" turn = "player";
 }
 
 function CheckCardPlayable(hand,centercard,selected,index) {
-	if string_char_at(centercard.value,3) == string_char_at(hand[selected[index]].value,3) or (string_char_at(centercard.value,1) == string_char_at(hand[selected[index]].value,1) and string_char_at(centercard.value,2) == string_char_at(hand[selected[index]].value,2)) {
+	if centercard.value.shape == hand[selected[index]].value.shape or centercard.value.number == hand[selected[index]].value.number {
 		return true;
 	}
 	else return false;
@@ -48,12 +47,12 @@ function CreateCard(deck,hand,_owner) {
 	if _owner == "player" {
 		_card = instance_create_layer(9999,200,"Instances",oCard);
 		_card.value = Draw(deck,hand,_card);
-		_card.image_index = string_char_at(_card.value,3);
+		_card.image_index = _card.value.shape;
 	}
 	else {
 		_card = instance_create_layer(9999,32,"Instances",oCard);
 		_card.value = Draw(deck,hand,_card);
-		_card.image_index = string_char_at(_card.value,3); //change back to 5
+		_card.image_index = _card.value.shape; //change back to 5 (the blank sprite)
 	}
 	_card.owner = _owner;
 }

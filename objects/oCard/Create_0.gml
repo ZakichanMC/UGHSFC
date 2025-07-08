@@ -1,4 +1,4 @@
-value = "";
+value = {};
 owner = "";
 selected = false;
 dragged = false;
