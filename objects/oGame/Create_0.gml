@@ -43,3 +43,5 @@ for (var i = 0; i < 5; i++) {
 var _centerCard = instance_create_layer(100,100,"Instances",oCenterCard);
 _centerCard.value = playerDeck[irandom(array_length(playerDeck)-1)];
 _centerCard.image_index = string_char_at(_centerCard.value,3);
+
+show_debug_message(global.cardData[$ "5 of Squares"]);

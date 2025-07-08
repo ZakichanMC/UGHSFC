@@ -26,7 +26,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 	//check cards against each other
 	for (var k = 0; k < array_length(_checkingList); k++) {
 		if k == 0 { //for the first card card, check against centercard
-			if !CheckCardPlayable(playerHand,oCenterCard,_checkingList,k) {S
+			if !CheckCardPlayable(playerHand,oCenterCard,_checkingList,k) {
 				_viable = false;
 				break;
 			}
