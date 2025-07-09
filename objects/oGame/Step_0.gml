@@ -39,21 +39,25 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 		}
 	}
 		
-	
 	//go through playerHand and delete the values if viable
 	if _viable {
+		var _toSwap = true;
 		for (var j = 0; j < array_length(_selectedList); j++) {
 			//if shape or number match
 			if CheckCardPlayable(playerHand,oCenterCard,_selectedList,j) {
 				oCenterCard.value = playerHand[_selectedList[j]].value; //change the center card
 				oCenterCard.image_index = oCenterCard.value.shape;
+				//if card has an effect, run it and check if it disables swapping but only if its the last card
+				if playerHand[_selectedList[j]].value.effect != noone and !script_execute(playerHand[_selectedList[j]].value.effect) and j == array_length(_selectedList)-1 {
+					_toSwap = false;
+				}
 				instance_destroy(playerHand[_selectedList[j]]); //destroy card
 				array_delete(playerHand,_selectedList[j],1); //remove from list
 			}
 			else break; //if there's anything that doesn't work, stop play
 		}
-	
-		SwapTurn();
+		
+		if _toSwap SwapTurn();
 	}
 }
 

@@ -36,7 +36,15 @@ function SwapTurn() {
 }
 
 function CheckCardPlayable(hand,centercard,selected,index) {
-	if centercard.value.shape == hand[selected[index]].value.shape or centercard.value.number == hand[selected[index]].value.number {
+	var _card = hand[selected[index]];
+	if centercard.value.playedUnder == NORMAL {
+		//check suit and number, pass if same or shapeless/numberless (5 for now, change to none or something)
+		if centercard.value.shape == _card.value.shape or centercard.value.number == _card.value.number or _card.value.shape == 5 or _card.value.number == 5 {
+			return true;
+		}
+	}
+	//return true regardless if centercard can have anything on top
+	else if centercard.value.playedUnder == ANY {
 		return true;
 	}
 	else return false;
@@ -52,7 +60,7 @@ function CreateCard(deck,hand,_owner) {
 	else {
 		_card = instance_create_layer(9999,32,"Instances",oCard);
 		_card.value = Draw(deck,hand,_card);
-		_card.image_index = _card.value.shape; //change back to 5 (the blank sprite)
+		_card.image_index = _card.value.shape; //change back to 6 (the blank sprite)
 	}
 	_card.owner = _owner;
 }

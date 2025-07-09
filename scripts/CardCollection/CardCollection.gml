@@ -31,8 +31,7 @@ for (var i = 0; i < 14; i++) { //for each number
 				description: "The " + string(i+1) + " of " + _shapeNames[j] + "s",
 				shape: _shapeValues[j],
 				number: i+1,
-				playedOnTopOf: ANY, //what this card can be played on (same shape or number)
-				playedUnder: ANY, //what can be played on this card
+				playedUnder: NORMAL, //what can be played on this card (same shape/number or shapeless/numberless card (shape/number = NONE))
 				effect: noone //default, can change later
 			}
 			
@@ -42,3 +41,19 @@ for (var i = 0; i < 14; i++) { //for each number
 		
 	}
 }
+
+function HoldOnEffect() {
+	turn = "player";
+	oGame.alarm[0] = -1;
+	return false; //returns whether to swap or not
+}
+
+//Hold on
+global.cardData[$ "Hold On"] = {
+	description: "Play any card on this card",
+	shape: 5, //change later, for now this is technically "none"
+	number: 1,
+	playedUnder: ANY,
+	effect: HoldOnEffect
+}
+

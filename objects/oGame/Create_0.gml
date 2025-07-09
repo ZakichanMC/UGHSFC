@@ -23,6 +23,13 @@ for (var i = 0; i < 5; i++) {
 	CreateCard(enemyDeck,enemyHand,"enemy");
 }
 
+//add hold on to playerHand (for testing)
+var _holdon = instance_create_layer(9999,200,"Instances",oCard);
+_holdon.value = global.cardData[$ "Hold On"];
+show_debug_message(_holdon.value.playedUnder);
+_holdon.image_index = _holdon.value.shape;
+_holdon.owner = "player";
+array_push(playerHand,_holdon);
 
 //start a default card in the center
 var _centerCard = instance_create_layer(100,100,"Instances",oCenterCard);
