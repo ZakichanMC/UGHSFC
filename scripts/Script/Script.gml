@@ -35,16 +35,8 @@ function SwapTurn() {
 	else if turn == "enemy" turn = "player";
 }
 
-function CheckCardPlayable(hand,centercard,selected,index) {
-	var _card = hand[selected[index]];
-	if centercard.value.playedUnder == NORMAL {
-		//check suit and number, pass if same or shapeless/numberless (5 for now, change to none or something)
-		if centercard.value.shape == _card.value.shape or centercard.value.number == _card.value.number or _card.value.shape == 5 or _card.value.number == 5 {
-			return true;
-		}
-	}
-	//return true regardless if centercard can have anything on top
-	else if centercard.value.playedUnder == ANY {
+function CheckCardPlayable(previous,next) {
+	if previous.value.shape == next.value.shape or previous.value.number == next.value.number {
 		return true;
 	}
 	else return false;

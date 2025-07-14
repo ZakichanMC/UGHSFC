@@ -5,7 +5,7 @@ if array_length(enemyDeck) == 0 enemyDeck = array_shuffle(global.defaultDeck);
 //add card to hand when draw button is clicked
 if checkObjectClicked(oDrawButton) and turn == "player" {
 	CreateCard(playerDeck,playerHand,"player");
-	SwapTurn();
+	//SwapTurn();
 }
 
 //change center card when play button is clicked
@@ -25,14 +25,26 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 
 	//check cards against each other
 	for (var k = 0; k < array_length(_checkingList); k++) {
+		
+		var _nextCard = playerHand[_checkingList[k]];
+		
 		if k == 0 { //for the first card card, check against centercard
-			if !CheckCardPlayable(playerHand,oCenterCard,_checkingList,k) {
+			//apply blueprint effect first
+			if (oCenterCard.value.blueprint != noone) {
+				script_execute(oCenterCard.value.blueprint.effect, _nextCard, oCenterCard.value.code);
+			}
+			if !CheckCardPlayable(oCenterCard,_nextCard) {
 				_viable = false;
 				break;
 			}
 		}
 		else { //for the rest of the cards, check against the previous card
-			if !CheckCardPlayable(playerHand,playerHand[_checkingList[k-1]],_checkingList,k) {
+			//apply blueprint effect
+			var _previousCard = playerHand[_checkingList[k-1]];
+			if (_previousCard.value.blueprint != noone) {
+				script_execute(_previousCard.value.blueprint.effect, _nextCard, _previousCard.value.code);
+			}
+			if !CheckCardPlayable(_previousCard,_nextCard) {
 				_viable = false;
 				break;
 			}
@@ -41,23 +53,20 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 		
 	//go through playerHand and delete the values if viable
 	if _viable {
-		var _toSwap = true;
 		for (var j = 0; j < array_length(_selectedList); j++) {
 			//if shape or number match
-			if CheckCardPlayable(playerHand,oCenterCard,_selectedList,j) {
-				oCenterCard.value = playerHand[_selectedList[j]].value; //change the center card
+			var _nextCard = playerHand[_selectedList[j]];
+			
+			if CheckCardPlayable(oCenterCard,_nextCard) {
+				oCenterCard.value = _nextCard.value; //change the center card
 				oCenterCard.image_index = oCenterCard.value.shape;
-				//if card has an effect, run it and check if it disables swapping but only if its the last card
-				if playerHand[_selectedList[j]].value.effect != noone and !script_execute(playerHand[_selectedList[j]].value.effect) and j == array_length(_selectedList)-1 {
-					_toSwap = false;
-				}
-				instance_destroy(playerHand[_selectedList[j]]); //destroy card
+				instance_destroy(_nextCard); //destroy card
 				array_delete(playerHand,_selectedList[j],1); //remove from list
 			}
 			else break; //if there's anything that doesn't work, stop play
 		}
 		
-		if _toSwap SwapTurn();
+		//SwapTurn();
 	}
 }
 

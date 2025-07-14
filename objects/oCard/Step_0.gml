@@ -20,6 +20,18 @@ if owner == "player" {
 	
 	if (selected and not dragged) {
 		y = origY - 10;
+		
+		//apply blueprint
+		if value.blueprint == noone and keyboard_check_pressed(ord("B")) {
+			value.blueprint = global.blueprints[$ "ShapeShifter"];
+			show_debug_message("BLUEPRINT APPLIED");
+		}
+		
+		//apply code
+		if value.code == noone and value.blueprint == global.blueprints[$ "ShapeShifter"] and keyboard_check_pressed(ord("C")) {
+			value.code = global.ShapeValues.triangle;
+			show_debug_message("CODE APPLIED");
+		}
 	}
 	else if !selected and !dragged {
 		y = origY;
