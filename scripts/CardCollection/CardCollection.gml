@@ -42,16 +42,3 @@ for (var i = 0; i < 14; i++) { //for each number
 	}
 }
 
-function changeShape(_nextCard,_code) {
-	if _code != noone {
-		_nextCard.value.shape = _code;
-	}
-}
-
-
-global.blueprints = {};
-global.blueprints[$ "ShapeShifter"] = {
-	description: "Change the shape of the next card played",
-	effect: changeShape,
-}
-

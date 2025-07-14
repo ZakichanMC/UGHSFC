@@ -1,0 +1,1 @@
+if (value != noone) image_index = value.value;

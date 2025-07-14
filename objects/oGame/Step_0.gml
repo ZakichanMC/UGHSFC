@@ -31,7 +31,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 		if k == 0 { //for the first card card, check against centercard
 			//apply blueprint effect first
 			if (oCenterCard.value.blueprint != noone) {
-				script_execute(oCenterCard.value.blueprint.effect, _nextCard, oCenterCard.value.code);
+				script_execute(asset_get_index(oCenterCard.value.blueprint.effect), _nextCard, oCenterCard.value.code);
 			}
 			if !CheckCardPlayable(oCenterCard,_nextCard) {
 				_viable = false;
@@ -42,7 +42,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 			//apply blueprint effect
 			var _previousCard = playerHand[_checkingList[k-1]];
 			if (_previousCard.value.blueprint != noone) {
-				script_execute(_previousCard.value.blueprint.effect, _nextCard, _previousCard.value.code);
+				script_execute(asset_get_index(_previousCard.value.blueprint.effect), _nextCard, _previousCard.value.code);
 			}
 			if !CheckCardPlayable(_previousCard,_nextCard) {
 				_viable = false;
@@ -83,3 +83,22 @@ array_sort(playerHand,function(a,b) {
 //make sure cards are always aligned properly
 AlignCards(playerHand);
 AlignCards(enemyHand);
+
+
+//align codes and blueprints
+for (var i = 0; i < array_length(playerBlueprints); i++) {
+	//avoid division by 0
+	if array_length(playerBlueprints) > 1 {
+		playerBlueprints[i].x = 432 + i * (192 - 32) / (array_length(playerBlueprints) - 1);
+	}
+	else playerBlueprints[i].x = 432;
+}
+
+	
+for (var i = 0; i < array_length(playerCodes); i++) {
+	//avoid division by 0
+	if array_length(playerCodes) > 1 {
+		playerCodes[i].x = 432 + i * (192 - 32) / (array_length(playerCodes) - 1);
+	}
+	else playerCodes[i].x = 432;
+}
