@@ -70,6 +70,7 @@ if checkObjectClicked(oPlayButton) and turn == "player" {
 	}
 }
 
+//swap turn from enemy to player after 1s
 if turn == "enemy" and alarm[0] < 0 {
 	alarm[0] = fps;
 }
@@ -85,20 +86,45 @@ AlignCards(playerHand);
 AlignCards(enemyHand);
 
 
-//align codes and blueprints
+//handle codes and blueprints
 for (var i = 0; i < array_length(playerBlueprints); i++) {
-	//avoid division by 0
+	//align
 	if array_length(playerBlueprints) > 1 {
 		playerBlueprints[i].x = 432 + i * (192 - 32) / (array_length(playerBlueprints) - 1);
 	}
 	else playerBlueprints[i].x = 432;
+	
+	
+	//clicked
+	if checkCardClicked(oBlueprint,"press") == playerBlueprints[i] {
+		for (var j = 0; j < array_length(playerHand); j++) {
+			if (playerHand[j].selected) {
+				playerHand[j].value.blueprint = playerBlueprints[i];
+				instance_destroy(playerBlueprints[i]); //destroy bp
+				array_delete(playerBlueprints,i,1); //remove from list
+				break;
+			}
+		}
+	}
 }
 
 	
 for (var i = 0; i < array_length(playerCodes); i++) {
-	//avoid division by 0
+	//align
 	if array_length(playerCodes) > 1 {
 		playerCodes[i].x = 432 + i * (192 - 32) / (array_length(playerCodes) - 1);
 	}
 	else playerCodes[i].x = 432;
+	
+	//clicked
+	if checkCardClicked(oCode,"press") == playerCodes[i] {
+		for (var j = 0; j < array_length(playerHand); j++) {
+			if (playerHand[j].selected) and playerHand[j].value.blueprint != noone {
+				playerHand[j].value.code = playerCodes[i];
+				instance_destroy(playerCodes[i]); //destroy code
+				array_delete(playerCodes,i,1); //remove from list
+				break;
+			}
+		}
+	}
 }
